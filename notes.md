@@ -84,3 +84,40 @@ stat: assign          ​// First alternative ('|' is alternative separator)​
 - sometimes many lookahead tokens are needed so that the parser can predict which alternative will succeed
 
 - unambiguous grammars must be provided so that parser can match each input phrase in exactly one way
+
+# Building Language Applications w/ Parse Trees
+- lexers process characters & pass tokens to parser
+- parser checks syntax & creates parse tree
+- relevant ANTLR classes: CharStream, Lexer, Token, Parser, ParseTree
+- TokenStream connects lexer & parser
+- ANTLR data structures share as much data possible to reduce memory requirements
+- token nodes in parse tree are containers pointing at tokens in token stream
+- tokens store start & stop char indexes into CharStream
+- context objects know start & stop tokens for the recognized phrase & give full access to all elements of the phrase
+
+# Listeners & Visitors
+
+## Listeners
+- ANTLR generates parse-tree listener interface to respond to events triggered by in-built tree walker 
+- Language apps require building a ParseTreeListener implementation containing app-specific code 
+- Listener mechanism is automatic; listener methods do not need to explicitly visit children
+
+## Visitors
+- -visitor option causes ANTLR to generate visitor interface 
+
+# C5 : ANTLR grammars
+x ~~~ Match token, rule reference, or subrule x.
+
+x y ... z ~~~ Match a sequence of rule elements.
+
+(... | ... | ...) ~~~ Subrule with multiple alternatives.
+
+x? ~~~ Match x or skip it. (optional; one or none)
+
+x* ~~~ Match x zero or more times.
+
+x+ ~~~ Match x one or more times.
+
+r : ... ; ~~~ Define rule r.
+
+r : ... | ... | ... ; ~~~ Define rule r with multiple alternatives.
